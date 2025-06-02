@@ -8,7 +8,7 @@ function Navbar() {
   return (
     <nav className="flex items-center h-16 px-4 bg-n-f-color">
       <div className="flex items-center space-x-2">
-      <div className="container mx-auto px-4 flex items-center justify-between h-full"> <img src="../assets/img/logo.png" alt="logo"/><h3>TicketShop</h3>
+      <div className=" "> <img src="../assets/img/logo.png" alt="logo"/><h3>TicketShop</h3>
       </div>
       <ul className="flex items-center space-x-8 ml-auto">
         {/*<img src="../assets/img/logo.png" alt="logo"></img>*/}

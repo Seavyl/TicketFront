@@ -1,7 +1,7 @@
 import React from 'react';
-import { Routes, Route, Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import NavBar from './components/Navbar'; // Importez votre Navbar
+import Navbar from './components/Navbar'; // Importez votre Navbar
 import Ticket from './pages/Ticket';
 import Contact from './pages/Contact';
 import Basket from './pages/Basket';
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <Router>
-      <NavBar />
+      <Navbar />
 
       <Routes>
         <Route path= "/" element={<HomePage />} />
@@ -23,6 +23,7 @@ function App() {
         <Route path= "/Basket" element={<Basket />} />
         <Route path= "/SignIn" element={<SignUp />} />
         <Route path= "/SignUp" element={<SignIn />} />
+        
       </Routes>
     </Router>
   )

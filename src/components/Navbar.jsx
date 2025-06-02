@@ -1,36 +1,70 @@
 // src/components/Navbar.jsx
 import React from 'react';
-import { Link } from 'react-router-dom'; // Important pour la navigation
-//import './Navbar.css'; // Nous allons créer ce fichier CSS juste après
+import { NavLink } from 'react-router-dom';
 
-const Navbar =() =>{
+
+
+function Navbar() {
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <Link to="/">MonLogo</Link> {/* Lien vers la page d'accueil */}
+    <nav className="flex items-center h-16 px-4 bg-n-f-color">
+      <div className="flex items-center space-x-2">
+      <div className="container mx-auto px-4 flex items-center justify-between h-full"> <img src="../assets/img/logo.png" alt="logo"/><h3>TicketShop</h3>
       </div>
-      <ul className="navbar-links">
-        <li>
-          <Link to="/">Home</Link>
+      <ul className="flex items-center space-x-8 ml-auto">
+        {/*<img src="../assets/img/logo.png" alt="logo"></img>*/}
+          <li>
+          <NavLink
+            to="/"
+            end
+            className="text-white hover:text-white font-bold "
+          >
+            Home
+          </NavLink>
         </li>
         <li>
-          <Link to="/Ticket">Ticket</Link>
+          <NavLink
+            to="/ticket"
+            className="text-white hover:text-white font-bold "
+          >
+            Tickets
+          </NavLink>
         </li>
         <li>
-          <Link to="/Contact">Contact</Link>
+          <NavLink
+            to="/contact"
+            className="text-white hover:text-white font-bold "
+          >
+            Contact
+          </NavLink>
         </li>
         <li>
-          <Link to="/Basket">Basket</Link>
+          <NavLink
+            to="/basket"
+            className="text-white hover:text-white font-bold "
+          >
+            Basket
+          </NavLink>
         </li>
         <li>
-          <Link to="/SignUp">Sign up</Link>
+          <NavLink
+            to="/signin"
+            className= "border rounded-full p-3 px-6 py-3 items-center   border-button-color text-center bg-button-color text-white font-bold"
+          >
+            Sign In
+          </NavLink>
         </li>
-        <li>
-          <Link to="/SignIn">Sign in</Link>
+        <li> 
+          <NavLink
+            to="/signup"
+            className= "border rounded-full p-3 px-6 py-3 items-center   border-button-color text-center bg-button-color text-white font-bold"
+          >
+            Sign Up
+          </NavLink>
         </li>
       </ul>
+      </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

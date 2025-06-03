@@ -1,17 +1,26 @@
 // src/components/Navbar.jsx
-import React from 'react';
+
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/img/logo.png';
 
 
 
 function Navbar() {
   return (
-    <nav className="flex items-center h-16 px-4 bg-n-f-color">
-      <div className="flex items-center space-x-2">
-      <div className=" "> <img src="../assets/img/logo.png" alt="logo"/><h3>TicketShop</h3>
-      </div>
-      <ul className="flex items-center space-x-8 ml-auto">
-        {/*<img src="../assets/img/logo.png" alt="logo"></img>*/}
+    <nav className="w-full flex items-center justify-between h-16 pl-0 pr-4 bg-n-f-color">
+      
+  <a href="/" className="inline-flex items-center">
+    <img
+      src={logo}
+      alt="TicketShop"
+      className="w-[130px] h-auto object-contain"
+    />
+    <h3 className="ml-2 text-2xl font-bold text-white">
+      TicketShop
+    </h3>
+  </a>
+
+      <ul className="flex items-center space-x-10">
           <li>
           <NavLink
             to="/"
@@ -62,7 +71,7 @@ function Navbar() {
           </NavLink>
         </li>
       </ul>
-      </div>
+    
     </nav>
   );
 }

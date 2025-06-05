@@ -1,6 +1,7 @@
+// postcss.config.js
 export default {
   plugins: {
-    tailwindcss: {},
+    tailwindcss: {}, // C'est LA ligne qui active Tailwind pour PostCSS
     autoprefixer: {},
   },
-}
+};

@@ -37,7 +37,7 @@ export default function Contact() {
             <div>
               <label
                 htmlFor="name"
-                className="block mb-2 text-white dm-sans text bold"
+                className="block mb-2 text-white font-bold"
               >
                 Name
               </label>
@@ -50,13 +50,13 @@ export default function Contact() {
                 required
                 placeholder="Name"
                 className="w-full bg-back-color placeholder-item-color
-                           px-6 py-4 rounded-full focus:outline-none"
+                           px-6 py-4 rounded-full font-bold focus:outline-none"
               />
             </div>
             <div>
               <label
                 htmlFor="email"
-                className="block mb-2 text-white font-medium"
+                className="block mb-2 text-white font-bold"
               >
                 Email
               </label>
@@ -69,7 +69,7 @@ export default function Contact() {
                 required
                 placeholder="example@email.com"
                 className="w-full bg-back-color text-teal-700 placeholder-item-color
-                           px-6 py-4 rounded-full focus:outline-none"
+                           px-6 py-4 rounded-full font-bold focus:outline-none"
               />
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function Contact() {
           <div>
             <label
               htmlFor="message"
-              className="block mb-2 text-white text-sm-sans bold"
+              className="block mb-2 text-white font-bold"
             >
               Message
             </label>
@@ -91,7 +91,7 @@ export default function Contact() {
               required
               placeholder="Please type your message here..."
               className="w-full bg-back-color placeholder-item-color
-                         px-6 py-6 rounded-2xl focus:outline-none resize-none"
+                         px-6 py-6 rounded-2xl focus:outline-none resize-none font-bold"
             />
           </div>
 
@@ -99,16 +99,12 @@ export default function Contact() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-button-color mt-20 px-6 py-3 text text-white rounded-full font-semibold">
+              className="bg-button-color mt-20 px-6 py-3 text text-white rounded-full font-bold">
       Submit
             </button>
           </div>
         </form>
       </main>
-
-      <footer className="py-6 text-center">
-        <p className="text-teal-500">&copy; {new Date().getFullYear()} TicketShop</p>
-      </footer>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 import Basket from './pages/Basket';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import '@fontsource/dm-sans';
 
 
 function App() {
@@ -21,8 +22,8 @@ function App() {
         <Route path= "/Ticket" element={<Ticket />} />
         <Route path= "/Contact" element={<Contact />} />
         <Route path= "/Basket" element={<Basket />} />
-        <Route path= "/SignIn" element={<SignUp />} />
-        <Route path= "/SignUp" element={<SignIn />} />
+        <Route path= "/SignIn" element={<SignIn />} />
+        <Route path= "/SignUp" element={<SignUp />} />
         
       </Routes>
     </Router>

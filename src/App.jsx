@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 import Basket from './pages/Basket';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import TicketCard from './components/TicketCard';
 import '@fontsource/dm-sans';
 
 
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path= "/" element={<HomePage />} />
         <Route path= "/Ticket" element={<Ticket />} />
+        <Route path= "/TicketCard" element={<TicketCard />} />
         <Route path= "/Contact" element={<Contact />} />
         <Route path= "/Basket" element={<Basket />} />
         <Route path= "/SignIn" element={<SignIn />} />

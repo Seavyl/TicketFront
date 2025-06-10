@@ -11,7 +11,7 @@ export default function Navbar() {
     { to: "/", label: "Home", end: true },
     { to: "/ticket", label: "Tickets" },
     { to: "/contact", label: "Contact" },
-    { to: "/basket", label: "Basket" },
+    { to: "/Cart", label: "Cart" },
   ];
 
   return (

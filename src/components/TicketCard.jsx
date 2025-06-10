@@ -10,6 +10,8 @@ export default function TicketCard({ ticket }) {
   px-6 py-[2px] leading-none
   rounded-full
 `;
+{/*const firstLine = artists.slice(0, 3);
+  const secondLine = artists.slice(3);*/}
 
   return (
     <div
@@ -23,6 +25,7 @@ export default function TicketCard({ ticket }) {
       <div className="absolute inset-0 flex flex-col justify-between px-8 py-20">
         {/* Top labels */}
         <div className="flex justify-between">
+        
           <span className={pillClasses}>
             {festival}
           </span>

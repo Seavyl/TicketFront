@@ -9,6 +9,7 @@ export default function ContactPage() {
     message: '',
   })
   const [feedback, setFeedback] = useState('')
+  const [isError, setIsError]   = useState(false)
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -20,11 +21,13 @@ export default function ContactPage() {
     setFeedback('')
     try {
       await axios.post('api/contacts', form)
-      setFeedback('Message envoyé !')
+      setIsError(false)
+      setFeedback('Message send !')
       setForm({ name: '', email: '', message: '' })
     } catch (err) {
       console.error(err)
-      setFeedback("Une erreur s'est produite.")
+      setIsError(true)
+      setFeedback("Error")
     }
   }
 
@@ -36,7 +39,12 @@ export default function ContactPage() {
           Contact us
         </h1>
         {feedback && (
-          <p className="mt-4 text-center text-white font-bold">
+          <p className={
+            // bg-vert si succès, bg-rouge si erreur
+            `mx-auto mt-4 inline-block px-6 py-2 rounded-full 
+             font-bold text-white 
+             ${isError ? 'bg-item-color' : 'bg-item-color'}`
+          }>
             {feedback}
           </p>
         )}

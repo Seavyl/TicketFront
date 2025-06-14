@@ -23,7 +23,7 @@ export default function SignUpPage() {
     <div className="min-h-screen bg-back-color flex flex-col items-center px-4">
       
       <h1 className="mt-20 mb-20 text-item-color font-bold text-4xl">
-        Sign in
+        Sign up
       </h1>
 
       

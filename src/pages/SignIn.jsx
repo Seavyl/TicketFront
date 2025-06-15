@@ -1,34 +1,60 @@
 // src/pages/SignInPage.jsx
+import React, { useState, useContext } from "react"
+import { useNavigate }                          from "react-router-dom"
+import { AuthContext }                          from "../contexts/AuthContext"
 
-import { useState } from "react";
+export default function SignIn() {
+  const [email, setEmail]       = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError]       = useState("")
+  const [loading, setLoading]   = useState(false)
 
-function SignInPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { login }   = useContext(AuthContext)
+  const navigate    = useNavigate()
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ email, password });
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+
+    try {
+      // ← Ici on place le fetch
+      const res = await fetch("/api/auth/signin", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ email, password })
+      })
+
+      if (res.status === 401) {
+        throw new Error("Email ou mot de passe incorrect.")
+      }
+      if (!res.ok) {
+        throw new Error("Erreur serveur, réessayez plus tard.")
+      }
+
+      const userData = await res.json()
+      login(userData)                       // on met à jour le contexte
+      navigate("/account", { replace: true }) // redirection vers la page protégée
+
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-back-color flex flex-col items-center px-4">
-      
       <h1 className="mt-20 mb-20 text-item-color font-bold text-4xl">
         Sign in
       </h1>
 
-      
-      <div
-        className="
-          bg-item-color
-          w-full max-w-[800px]
-          h-auto md:h-[400px]
-          flex flex-col md:justify-center
-          px-6 md:px-12
-          py-12 md:py-0
-        "
-      >
+      <div className="
+          bg-item-color w-full max-w-[800px] h-auto md:h-[400px]
+          flex flex-col md:justify-center px-6 md:px-12 py-12 md:py-0
+        ">
+        {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
+
         <form
           onSubmit={handleSubmit}
           className="w-full flex flex-col space-y-6"
@@ -44,16 +70,13 @@ function SignInPage() {
             <input
               id="email"
               type="email"
-              placeholder="Your name"
+              placeholder="votre@mail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               className="
-                w-full md:w-3/4 h-12
-                bg-back-color text-item-color
-                rounded-full px-6 
-                placeholder-item-color 
-              
+                w-full md:w-3/4 h-12 bg-back-color text-item-color
+                rounded-full px-6 placeholder-item-color
               "
             />
           </div>
@@ -73,11 +96,8 @@ function SignInPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="
-                w-full md:w-3/4 h-12
-                bg-back-color text-item-color
-                rounded-full px-6
-                placeholder-item-color 
-                
+                w-full md:w-3/4 h-12 bg-back-color text-item-color
+                rounded-full px-6 placeholder-item-color
               "
             />
           </div>
@@ -85,20 +105,17 @@ function SignInPage() {
           <div className="flex justify-center pt-4">
             <button
               type="submit"
-              className="
-                bg-button-color text-white
-                rounded-full px-10 py-2.5
-                font-bold 
-                
-              "
+              disabled={loading}
+              className={`
+                bg-button-color text-white rounded-full px-10 py-2.5 font-bold
+                ${loading ? "opacity-50 cursor-not-allowed" : ""}
+              `}
             >
-              confirm
+              {loading ? "Loading…" : "Confirm"}
             </button>
           </div>
         </form>
       </div>
     </div>
-  );
+  )
 }
-
-export default SignInPage;

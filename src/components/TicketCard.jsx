@@ -5,7 +5,7 @@ export default function TicketCard({ ticket, onQuantityChange }) {
     id,
     festival,
     city,
-    artists    = [],
+    artist   = [],
     categories = [],
     dateStart,
     dateEnd,
@@ -43,8 +43,6 @@ export default function TicketCard({ ticket, onQuantityChange }) {
     leading-none rounded-full truncate
   `;
 
-  const firstLine  = artists.slice(0, 2);
-  const secondLine = artists.slice(2);
 
   return (
     <div
@@ -59,7 +57,7 @@ export default function TicketCard({ ticket, onQuantityChange }) {
     >
       <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-between p-4 sm:p-6">
         {/* Festival & Lieu */}
-        <div className="flex justify-between mb-2 sm:mb-4">
+        <div className="flex justify-between mb-2 sm:mb-4"> 
           <span className={pill}>{festival}</span>
           <span className={pill}>{city}</span>
         </div>
@@ -77,17 +75,15 @@ export default function TicketCard({ ticket, onQuantityChange }) {
         <div className="flex justify-between items-center mb-2 sm:mb-4">
           <div className="mb-2 sm:mb-4">
             <div className="flex gap-2">
-              {firstLine.map((name,i) => (
-                <span key={i} className={pill}>{name}</span>
-              ))}
+              
+                <span className={pill}>{artist}</span>
+              
             </div>
-            {secondLine.length>0 && (
-              <div className="flex gap-2 mt-2">
-                {secondLine.map((name,i) => (
-                  <span key={i+2} className={pill}>{name}</span>
-                ))}
+            <div className="mt-1 text-xs sm:text-sm text-item-color">
+              {dateStr}
+              
               </div>
-            )}
+            
           </div>
           <span className={pill}>{dateStr}</span>
         </div>

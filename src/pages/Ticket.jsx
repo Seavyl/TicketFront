@@ -1,5 +1,6 @@
 // src/pages/Tickets.jsx
 import React, { useState, useEffect } from 'react'
+import { CATEGORY_MAP } from '../constants/categoryMap';
 import apiClient  from '../api/axiosInstance'
 import TicketCard from '../components/TicketCard'
 import concert1   from '../assets/img/concert1.jpg'
@@ -28,9 +29,8 @@ export default function Tickets() {
         const raw = res.data.member ?? []
         const formatted = raw.map(t => ({
           id:         t.id,
-          festival:   t.artist_name,
+          artist:     t.artist_name,
           city:       t.venue,
-          artists:    [t.artist_name],
           categories: [String(t.category_id)],
           dateStart:  t.start_date,
           dateEnd:    t.end_date,

@@ -1,47 +1,35 @@
 // src/pages/SignInPage.jsx
-import React, { useState, useContext } from "react"
-import { useNavigate }                          from "react-router-dom"
-import { AuthContext }                          from "../contexts/AuthContext"
+import React, { useState } from "react";
+import { useNavigate }      from "react-router-dom";
+import { useAuth }          from "../hooks/useAuth";
 
-export default function SignIn() {
-  const [email, setEmail]       = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError]       = useState("")
-  const [loading, setLoading]   = useState(false)
+export default function SignInPage() {
+  const { login } = useAuth();
+  const nav       = useNavigate();
 
-  const { login }   = useContext(AuthContext)
-  const navigate    = useNavigate()
+  const [email,    setEmail]    = useState("");
+  const [password, setPassword] = useState("");
+  const [err,      setErr]      = useState("");
+  const [loading,  setLoading]  = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
-
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setErr("");
+    setLoading(true);
     try {
-      // ← Ici on place le fetch
-      const res = await fetch("/api/auth/signin", {
-        method:  "POST",
-        headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ email, password })
-      })
-
-      if (res.status === 401) {
-        throw new Error("Email ou mot de passe incorrect.")
-      }
-      if (!res.ok) {
-        throw new Error("Erreur serveur, réessayez plus tard.")
-      }
-
-      const userData = await res.json()
-      login(userData)                       // on met à jour le contexte
-      navigate("/account", { replace: true }) // redirection vers la page protégée
-
-    } catch (err) {
-      setError(err.message)
+      await login(email, password);
+      nav("/account", { replace: true });
+    } catch (e) {
+      setErr(
+        e.response?.data?.error ||
+        e.response?.data?.message ||
+        e.message ||
+        "Erreur de connexion"
+      );
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-back-color flex flex-col items-center px-4">
@@ -53,7 +41,7 @@ export default function SignIn() {
           bg-item-color w-full max-w-[800px] h-auto md:h-[400px]
           flex flex-col md:justify-center px-6 md:px-12 py-12 md:py-0
         ">
-        {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
+        {err && <p className="text-red-400 mb-4 text-center">{err}</p>}
 
         <form
           onSubmit={handleSubmit}
@@ -72,7 +60,7 @@ export default function SignIn() {
               type="email"
               placeholder="votre@mail.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               className="
                 w-full md:w-3/4 h-12 bg-back-color text-item-color
@@ -93,7 +81,7 @@ export default function SignIn() {
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
               className="
                 w-full md:w-3/4 h-12 bg-back-color text-item-color
@@ -117,5 +105,5 @@ export default function SignIn() {
         </form>
       </div>
     </div>
-  )
-}
+  );
+} 

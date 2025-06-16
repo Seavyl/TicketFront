@@ -1,44 +1,43 @@
-import React, { useContext} from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import Navbar from './components/Navbar'; // Importez votre Navbar
-import Ticket from './pages/Ticket';
-import Contact from './pages/Contact';
-import Basket from './pages/Basket';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Account from './components/Account';
-import TicketCard from './components/TicketCard';
-import '@fontsource/dm-sans';
-import { AuthContext } from "./contexts/AuthContext";
+// src/App.jsx
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import "@fontsource/dm-sans";
 
-function ProtectedRoute({ children }) {
-  const { user } = useContext(AuthContext)
-  return user ? children : <Navigate to="/signin" replace />
-}
+import HomePage       from "./pages/HomePage";
+import Ticket         from "./pages/Ticket";
+import TicketCard     from "./components/TicketCard";
+import Contact        from "./pages/Contact";
+import Basket         from "./pages/Basket";
+import SignIn         from "./pages/SignIn";
+import SignUp         from "./pages/SignUp";
+import Account        from "./components/Account";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminRoute     from "./components/AdminRoute";
 
-function App() {
-  
-
+export default function App() {
   return (
-    <Router>
-      <Navbar />
+    <Routes>
+      <Route path="/"            element={<HomePage />} />
+      <Route path="/ticket"      element={<Ticket />} />
+      <Route path="/ticket-card" element={<TicketCard />} />
+      <Route path="/contact"     element={<Contact />} />
+      <Route path="/basket"      element={<Basket />} />
+      <Route path="/signin"      element={<SignIn />} />
+      <Route path="/signup"      element={<SignUp />} />
+      <Route path="/account"     element={<Account />} />
 
-      <Routes>
-        <Route path= "/" element={<HomePage />} />
-        <Route path= "/Ticket" element={<Ticket />} />
-        <Route path= "/TicketCard" element={<TicketCard />} />
-        <Route path= "/Contact" element={<Contact />} />
-        <Route path= "/Basket" element={<Basket />} />
-        <Route path= "/SignIn" element={<SignIn />} />
-        <Route path= "/SignUp" element={<SignUp />} />
-        <Route path="/Account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
-       
+      {/* Dashboard réservé aux admins */}
+      <Route
+        path="/admin/dashboard"
+        element={
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        }
+      />
 
-        
-      </Routes>
-    </Router>
-  )
+      {/* catch-all → redirige vers l’accueil */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
 }
-
-export default App

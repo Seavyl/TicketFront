@@ -1,19 +1,15 @@
 // src/api/axiosInstance.js
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
-
-if (!import.meta.env.VITE_API_BASE_URL) {
-    console.warn("Attention : VITE_API_BASE_URL non défini, URL de secours utilisée",);
-}
-
 const apiClient = axios.create({
-    baseURL,
-    timeout: 5000,
-    headers: {
-        "Content-Type": "application/json",
-        "Accept":       "application/ld+json, application/json",
-    }
+  baseURL: "/api",       // via proxy Vite
+  timeout: 5000,
+  withCredentials: true, // si tu utilises des cookies de session
+  headers: {
+    "Content-Type": "application/json",
+    // pour API-Platform JSON-LD + JSON classique
+    Accept: "application/ld+json, application/json"
+  }
 });
 
-export default apiClient;
+export default apiClient;   

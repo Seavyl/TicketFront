@@ -1,24 +1,24 @@
-// src/pages/SignUpPage.jsx
-import { useState } from "react";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext }    from '../Context/AuthContext';
 
-export default function SignUpPage() {
-  const [form, setForm] = useState({
-    name:            "",
-    email:           "",
-    address:         "",
-    password:        "",
-    confirmPassword: "",   // on ajoute confirmPassword
-  });
+export default function SignUp() {
+  const { signup, err, loading } = useAuthContext();
+  const [name, setName]           = useState('');
+  const [address, setAddress]     = useState('');
+  const [email, setEmail]         = useState('');
+  const [password, setPassword]   = useState('')
+  const navigate                  = useNavigate();
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log("Inscription avec :", form);
-    // ici tu peux ajouter une validation confirmPassword === password
+    try {
+      await signup(name, address, email, password);
+      navigate('/', { replace: true });
+    } catch {
+      // l'erreur est déjà remontée dans `error`
+    }
   };
-
   return (
     <div className="min-h-screen bg-back-color flex flex-col items-center px-4">
       <h1 className="mt-20 mb-20 text-item-color font-bold text-4xl">
@@ -36,6 +36,7 @@ export default function SignUpPage() {
           pb-8
         "
       >
+      {err && <p className="text-button-color bg-item-color mb-4 text-center">{err}</p>}
         <form
           onSubmit={handleSubmit}
           noValidate
@@ -54,8 +55,8 @@ export default function SignUpPage() {
                 id="name"
                 name="name"
                 type="text"
-                value={form.name}
-                onChange={handleChange}
+                value={name}
+                onChange ={e => setName(e.target.value)}
                 required
                 placeholder="Your name"
                 className="
@@ -79,8 +80,8 @@ export default function SignUpPage() {
                 id="email"
                 name="email"
                 type="email"
-                value={form.email}
-                onChange={handleChange}
+                value={email}
+                onChange={e=>setEmail(e.target.value)}
                 required
                 placeholder="you@example.com"
                 className="
@@ -104,8 +105,8 @@ export default function SignUpPage() {
                 id="address"
                 name="address"
                 type="text"
-                value={form.address}
-                onChange={handleChange}
+                value={address}
+                onChange={e=>setAddress(e.target.value)}
                 required
                 placeholder="Your address"
                 className="
@@ -129,8 +130,8 @@ export default function SignUpPage() {
                 id="password"
                 name="password"
                 type="password"
-                value={form.password}
-                onChange={handleChange}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
                 className="
@@ -143,41 +144,20 @@ export default function SignUpPage() {
             </div>
 
             {/* Confirm Password */}
-            <div className="flex flex-col md:flex-row md:items-center">
-              <label
-                htmlFor="confirmPassword"
-                className="text-white font-bold mb-2 md:mb-0 md:w-1/4"
-              >
-                Confirm Password
-              </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                required
-                placeholder="••••••••"
-                className="
-                  w-full md:w-3/4 h-12
-                  bg-back-color text-item-color
-                  rounded-full px-6
-                  placeholder-item-color 
-                "
-              />
-            </div>
+           
           </div>
 
           {/* Bouton Submit */}
           <div className="text-center mb-6 md:mb-8">
             <button
               type="submit"
+              disabled={loading}
               className="
                 bg-button-color text-white
                 px-10 py-2.5 rounded-full font-bold
               "
             >
-              submit
+              {loading ? 'Loading…' : 'Submit'}
             </button>
           </div>
         </form>

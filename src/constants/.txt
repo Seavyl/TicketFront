@@ -1,1 +1,3 @@
 npm install date-fns: date timestamp
+composer require api : installer 
+composer require api-platform/api-pack: tous le pack    

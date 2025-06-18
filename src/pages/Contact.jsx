@@ -23,12 +23,12 @@ export default function ContactPage() {
       // baseURL='/api', donc appelle POST '/api/contacts'
       await apiClient.post('/contacts', form)
       setIsError(false)
-      setFeedback('Message envoyé !')
+      setFeedback('Message send !')
       setForm({ name: '', email: '', message: '' })
     } catch (err) {
       console.error(err)
       setIsError(true)
-      setFeedback('Erreur lors de l’envoi')
+      setFeedback('Error ')
     }
   }
 
@@ -67,7 +67,7 @@ export default function ContactPage() {
                 placeholder="Name"
                 className="
                   w-full bg-back-color placeholder-item-color
-                  px-6 py-4 rounded-full font-bold focus:outline-none
+                  px-6 py-4 rounded-full focus:outline-none
                 "
               />
             </div>
@@ -85,7 +85,7 @@ export default function ContactPage() {
                 placeholder="example@mail.com"
                 className="
                   w-full bg-back-color placeholder-item-color
-                  px-6 py-4 rounded-full font-bold focus:outline-none
+                  px-6 py-4 rounded-full focus:outline-none
                 "
               />
             </div>
@@ -106,7 +106,7 @@ export default function ContactPage() {
               className="
                 w-full bg-back-color placeholder-item-color
                 px-6 py-6 rounded-2xl resize-none
-                focus:outline-none font-bold
+                focus:outline-none
               "
             />
           </div>

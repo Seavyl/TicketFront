@@ -1,36 +1,29 @@
-// src/pages/SignInPage.jsx
-import React, { useState } from "react";
-import { useNavigate }      from "react-router-dom";
-import { useAuth }          from "../hooks/useAuth";
+import React, { useState } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useAuthContext } from '../Context/AuthContext';
 
-export default function SignInPage() {
-  const { login } = useAuth();
-  const nav       = useNavigate();
+export default function SignIn() {
+  const { login, err, loading } = useAuthContext();
+  const [email, setEmail]         = useState('');
+  const [password, setPassword]   = useState('');
+  const navigate                  = useNavigate();
+  const location                  = useLocation();
 
-  const [email,    setEmail]    = useState("");
-  const [password, setPassword] = useState("");
-  const [err,      setErr]      = useState("");
-  const [loading,  setLoading]  = useState(false);
+  // Remplace optional chaining par un test classique
+  const state = location.state || {};
+  const from  = state.from && state.from.pathname
+    ? state.from.pathname
+    : '/';
 
   const handleSubmit = async e => {
     e.preventDefault();
-    setErr("");
-    setLoading(true);
     try {
       await login(email, password);
-      nav("/account", { replace: true });
-    } catch (e) {
-      setErr(
-        e.response?.data?.error ||
-        e.response?.data?.message ||
-        e.message ||
-        "Erreur de connexion"
-      );
-    } finally {
-      setLoading(false);
+      navigate(from, { replace: true });
+    } catch {
+      // error est dans error
     }
   };
-
   return (
     <div className="min-h-screen bg-back-color flex flex-col items-center px-4">
       <h1 className="mt-20 mb-20 text-item-color font-bold text-4xl">
@@ -41,7 +34,7 @@ export default function SignInPage() {
           bg-item-color w-full max-w-[800px] h-auto md:h-[400px]
           flex flex-col md:justify-center px-6 md:px-12 py-12 md:py-0
         ">
-        {err && <p className="text-red-400 mb-4 text-center">{err}</p>}
+        {err && <p className="text-button-color bg-item-color mb-4 text-center">{err}</p>}
 
         <form
           onSubmit={handleSubmit}

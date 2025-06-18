@@ -1,15 +1,13 @@
 // src/api/axiosInstance.js
-import axios from "axios";
+import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: "/api",       // via proxy Vite
-  timeout: 5000,
-  withCredentials: true, // si tu utilises des cookies de session
+  baseURL: '/api',         // <- pas de slash final
+  withCredentials: true,   // envoie automatiquement le cookie
   headers: {
-    "Content-Type": "application/json",
-    // pour API-Platform JSON-LD + JSON classique
-    Accept: "application/ld+json, application/json"
+    'Content-Type': 'application/json',
+    Accept: 'application/json'
   }
 });
 
-export default apiClient;   
+export default apiClient;

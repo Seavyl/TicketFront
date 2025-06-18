@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from '../hooks/useAuth'
+
 import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function TicketCard({ ticket, onQuantityChange }) {
@@ -9,19 +9,22 @@ export default function TicketCard({ ticket, onQuantityChange }) {
     quantity, remaining,
   } = ticket
 
-  const { user } = useAuth()
+  
   const navigate = useNavigate()
   const location = useLocation()
 
+  const token      = localStorage.getItem('jwt')
+  const isLoggedIn = Boolean(token)
+
   const handleGetTicket = () => {
-  if (!user) {
+  if (!isLoggedIn) {
     // pas connecté → on mémorise d’où on vient et on redirige
     navigate('/signin', { state: { from: location } })
     return
   }
   // ici : votre logique d’ajout au panier
-  console.log('Ajout au panier:', ticket.id, 'qty=', quantity)
-  navigate('/card') // ou autre
+  console.log('Ajout au panier:', id, 'qty=', quantity)
+    navigate('/cart')
 }
 
   const artistList = artist.split('  ')
@@ -109,7 +112,7 @@ export default function TicketCard({ ticket, onQuantityChange }) {
                       bg-button-color text-white font-bold
                       px-6 py-2 rounded-full hover:opacity-90 transition
                     " >
-                    {user ? 'get ticket' : 'Sign in to get ticket'}
+                    {isLoggedIn ? 'get ticket' : 'Sign in to get ticket'}
         </button>
         </div>
       </div>

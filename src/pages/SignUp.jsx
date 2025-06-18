@@ -1,24 +1,46 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuthContext }    from '../Context/AuthContext';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import api from '../api/axiosInstance.js'  // ≤ votre instance Axios
 
 export default function SignUp() {
-  const { signup, err, loading } = useAuthContext();
-  const [name, setName]           = useState('');
-  const [address, setAddress]     = useState('');
-  const [email, setEmail]         = useState('');
-  const [password, setPassword]   = useState('')
-  const navigate                  = useNavigate();
+  const [name, setName]         = useState('')
+  const [address, setAddress]   = useState('')
+  const [email, setEmail]       = useState('')
+  const [password, setPassword] = useState('')
+
+  const [err, setError]     = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleSubmit = async e => {
-    e.preventDefault();
+    e.preventDefault()
+    setError('')      // reset
+    setLoading(true)
+
     try {
-      await signup(name, address, email, password);
-      navigate('/', { replace: true });
-    } catch {
-      // l'erreur est déjà remontée dans `error`
+      // ← on appelle directement api.post et non signup()
+      await api.post('/register', {
+        name,
+        address,
+        email,
+        password
+      })
+      // inscription réussie → on redirige vers la page de connexion
+      navigate('/signin', { replace: true })
+    } catch (err) {
+      // Symfony renvoie souvent { detail: "..." }
+      const msg =
+        err.response?.data?.detail ||
+        err.response?.data?.message ||
+        err.message
+      setError(msg)
+    } finally {
+      setLoading(false)
     }
-  };
+  }
+
+
   return (
     <div className="min-h-screen bg-back-color flex flex-col items-center px-4">
       <h1 className="mt-20 mb-20 text-item-color font-bold text-4xl">

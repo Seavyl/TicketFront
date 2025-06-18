@@ -1,3 +1,49 @@
-npm install date-fns: date timestamp
-composer require api : installer 
-composer require api-platform/api-pack: tous le pack    
+composer require api 
+ installer api_platform
+
+composer require api-platform/api-pack
+tous le pack    
+
+composer dump-autoload
+php bin/console cache:clear 
+ clear le cache
+
+php bin/console list app 
+liste les commandes pouvant être exécuté
+
+php bin/console app:generate-token test@example.com
+une fois tout bien installer cela génère token json
+
+npm install axios:
+Install axios
+
+npm run dev
+Lancer sever react
+
+symfony serve
+lancer server symfony
+
+Token dupond: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NTAyNzAwNjcsImV4cCI6MTc1MDI3MzY2Nywicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImR1cG9uZEBnbWFpbC5jb20ifQ.E1nYU5RA006I_u3N2C5JD7mHs_6EbxTZSgDGYodz291JxjSVaLWQRQOTr1Gd_fY_qk97olW8cXmk1hUhbGCbUj9VxgJ5a5vZLnRSbxYl7lTxlX4O_5cgCpq2G3E8MJE3q4zHvBH9dGuBwPucPKnNRo22Z5ctUBA9KNbyG3Xd8XwUI5AiDV_9QydlzsXclh-b8DX8LOs33418jlMoOuIRqYTKw6Uc624bSrVkkdVFmzBFp-_LQh4NYZOc7eHb0i1w7kRJpgRHxRGYYbQHyjqh0wYDF6sF2_0wSpMfVH9ZtAquJ5rZfdMfV5h1wY5bQtoTEgKZbxK4-VA6FV7Wv7uTNR-HKs5xRo0pFTH_ksZSho8xsIzEbE5EVyDvtUozvLK1qPr8XfpsPitFn8nIfFEbgDOW2lAIAP_1l3gUcW3g0spctqMlXqa6bAY5GOES-XpZe1q0v8r0HhT0T-agKsuJdP2usMce4Zhf6fTaKNW7XlL0qFfSafACP-fvh55zf9TNa2FycAGx0tmSNG7Qg8ol0KT-nDNg__vdjFEibW4CTg3dFBvw8pC3uhbYV1bEQpIxM4Q1ND6J5Et5gFa0bXImodRf6WZRC4O133PoS8za9j0hbcfLswygXbRg91OsRrqRasGhdWBa17nLBM_A6-UBFR1hwEuXQVU_qpj6mapAuq0
+
+# Préparez vos identifiants
+$body = @{
+  email    = 'dupond@gmail.com'
+  password = 'Mot'
+} | ConvertTo-Json
+
+try {
+  # Appel POST vers /api/login_check
+  $loginResp = Invoke-RestMethod `
+    -Uri  'http://127.0.0.1:8000/api/login_check' `
+    -Method POST `
+    -Body $body `
+    -ContentType 'application/json' `
+    -ErrorAction Stop
+
+  $token = $loginResp.token
+  Write-Host "✓ Token généré : $token" -ForegroundColor Green
+}
+catch {
+  Write-Host "❌ Échec login :" $_.Exception.Message -ForegroundColor Red
+  return
+}

@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { useAuthContext } from '../Context/AuthContext';
+import React, { useState } from 'react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
+import api from '../api/axiosInstance'  // votre instance Axios
 
 export default function SignIn() {
-  const { login, err, loading } = useAuthContext();
-  const [email, setEmail]         = useState('');
-  const [password, setPassword]   = useState('');
-  const navigate                  = useNavigate();
-  const location                  = useLocation();
+  const [email, setEmail]       = useState('')
+  const [password, setPassword] = useState('')
+  const [err, setError]       = useState('')
+  const [loading, setLoading]   = useState(false)
 
-  // Remplace optional chaining par un test classique
-  const state = location.state || {};
-  const from  = state.from && state.from.pathname
-    ? state.from.pathname
-    : '/';
+  const navigate = useNavigate()
+  const location = useLocation()
+  // pour rediriger vers la page souhaitée après login
+  const from = location.state?.from?.pathname || '/'
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
     try {
-      await login(email, password);
-      navigate(from, { replace: true });
-    } catch {
-      // error est dans error
+      // 1) Appel à /api/login_check
+      const { data } = await api.post('/login_check', {
+        email,
+        password
+      })
+      // 2) Stockage du token
+      localStorage.setItem('jwt', data.token)
+      // 3) Redirection
+      navigate(from, { replace: true })
+    } catch (err) {
+      // Symfony renvoie souvent { detail: "..." } en cas d'erreur
+      const msg = err.response?.data?.detail || err.message
+      setError(msg)
+    } finally {
+      setLoading(false)
     }
-  };
+  }
+
   return (
     <div className="min-h-screen bg-back-color flex flex-col items-center px-4">
       <h1 className="mt-20 mb-20 text-item-color font-bold text-4xl">

@@ -2,12 +2,22 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: '/api',         // <- pas de slash final
-  withCredentials: true,   // envoie automatiquement le cookie
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json'
-  }
+  baseURL: 'http://127.0.0.1:8000/api',
+  headers: { 'Content-Type': 'application/json' }
 });
+
+apiClient.interceptors.response.use(
+  res => res,
+  err => {
+    // Si le serveur renvoie 401 → token invalide ou expiré
+    if (err.response?.status === 401) {
+      // Supprime le token stocké
+      localStorage.removeItem('jwt');
+      // Redirige vers la page de connexion (ou recharge la fenêtre)
+      window.location.href = '/signin';
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default apiClient;

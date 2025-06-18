@@ -10,13 +10,11 @@ import Contact        from "./pages/Contact";
 import Card         from "./pages/Card";
 import SignIn         from "./pages/SignIn";
 import SignUp         from "./pages/SignUp";
-
+import PrivateRoute from "./components/PrivateRoute"
 import Account        from "./components/Account";
 import AdminDashboard from "./pages/AdminDashboard";
-import AdminRoute     from "./components/AdminRoute";
 import Navbar from "./components/Navbar";
-import Profile from "./pages/Profile";
-import RequireAuth from './components/requireAuth';
+
 
 
 export default function App() {
@@ -30,30 +28,17 @@ export default function App() {
       <Route path="/contact"     element={<Contact />} />
       <Route path="/card"        element={<Card />} />
       <Route path="/login"       element={<SignIn />} />
-      <Route path="/"            element={<Profile />} />
       <Route path="/signup"      element={<SignUp />} />
-      <Route
-        path="/"
-        element={
-          <RequireAuth>
-            <Profile />
-          </RequireAuth>
-        }
-      />
       <Route path="/account"     element={<Account />} />
 
-      {/* Dashboard réservé aux admins */}
-      <Route
-        path="/admin/dashboard"
-        element={
-          <AdminRoute>
-            <AdminDashboard />
-          </AdminRoute>
-        }
-      />
-
+     <Route element={<PrivateRoute />}>
+    <Route path="/dashboard" element={<AdminDashboard />} />
+    {/* ici, vous pouvez ajouter d’autres routes protégées */}
+  </Route>
+     
+    
       {/* catch-all → redirige vers l’accueil */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+     
     </Routes>
     </>
   );

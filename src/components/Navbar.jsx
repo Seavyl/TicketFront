@@ -1,37 +1,43 @@
 // src/components/Navbar.jsx
-import React, { useState } from "react"
-import { NavLink }          from "react-router-dom"
-import { Bars3Icon, XMarkIcon }
-  from "@heroicons/react/24/outline"
-import logo                 from "../assets/img/logo.png"
-import { useAuth }          from "../hooks/useAuth"  // ←
+import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import logo from '../assets/img/logo.png'
 
 const links = [
-  { to: "/",       label: "Home",    end: true },
-  { to: "/ticket", label: "Tickets"         },
-  { to: "/contact",label: "Contact"         },
-  { to: "/cart",   label: "Cart"            },
-  { to: "/signup", label: "Sign Up",  auth: "guest" },
-  { to: "/signin", label: "Sign In",  auth: "guest" },
+  { to: '/',       label: 'Home',    end: true  },
+  { to: '/ticket', label: 'Tickets'            },
+  { to: '/contact',label: 'Contact'            },
+  { to: '/cart',   label: 'Cart'               },
+  { to: '/signup', label: 'Sign Up',  auth: 'guest' },
+  { to: '/signin', label: 'Sign In',  auth: 'guest' },
 ]
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const { user, logout }    = useAuth()   // ← ici on récupère user et logout
+  const navigate            = useNavigate()
+  // on considère l'utilisateur "connecté" si un token JWT est en storage
+  const token = localStorage.getItem('jwt')
+  const user  = Boolean(token)
 
-  const linkClass     = "text-white font-bold hover:text-white"
+  const logout = () => {
+    localStorage.removeItem('jwt')
+    navigate('/signin', { replace: true })
+  }
+
+  const linkClass = 'text-white font-bold hover:text-white'
   const authLinkClass = [
-    "border border-button-color",
-    "bg-button-color text-white rounded-full",
-    "max-w-max whitespace-nowrap",
-    "md:px-4 md:py-2 lg:px-6 lg:py-2 font-bold"
-  ].join(" ")
-  const mobileClass   =
-    "block text-white font-bold px-3 py-2 rounded-md hover:bg-n-f-color/80"
+    'border border-button-color',
+    'bg-button-color text-white rounded-full',
+    'max-w-max whitespace-nowrap',
+    'md:px-4 md:py-2 lg:px-6 lg:py-2 font-bold'
+  ].join(' ')
+  const mobileClass = 
+    'block text-white font-bold px-3 py-2 rounded-md hover:bg-n-f-color/80'
 
-  // on masque les liens "guest" si on est loggé
+  // on masque les liens "guest" (Sign Up/Sign In) si utilisateur connecté
   const desktopLinks = links.filter(l =>
-    l.auth === "guest" ? !user : true
+    l.auth === 'guest' ? !user : true
   )
 
   return (

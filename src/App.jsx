@@ -27,13 +27,14 @@ export default function App() {
       <Route path="/ticket-card" element={<TicketCard />} />
       <Route path="/contact"     element={<Contact />} />
       <Route path="/card"        element={<Card />} />
-      <Route path="/login"       element={<SignIn />} />
+      <Route path="/signin"       element={<SignIn />} />
       <Route path="/signup"      element={<SignUp />} />
       <Route path="/account"     element={<Account />} />
 
      <Route element={<PrivateRoute />}>
     <Route path="/dashboard" element={<AdminDashboard />} />
     {/* ici, vous pouvez ajouter d’autres routes protégées */}
+    <Route path="*" element={<Navigate to="/signin" replace />} />
   </Route>
      
     

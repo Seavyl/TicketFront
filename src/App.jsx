@@ -7,7 +7,7 @@ import HomePage       from "./pages/HomePage";
 import Ticket         from "./pages/Ticket";
 import TicketCard     from "./components/TicketCard";
 import Contact        from "./pages/Contact";
-import Card         from "./pages/Card";
+import Cart         from "./pages/Cart";
 import SignIn         from "./pages/SignIn";
 import SignUp         from "./pages/SignUp";
 import PrivateRoute from "./components/PrivateRoute"
@@ -26,7 +26,7 @@ export default function App() {
       <Route path="/ticket"      element={<Ticket />} />
       <Route path="/ticket-card" element={<TicketCard />} />
       <Route path="/contact"     element={<Contact />} />
-      <Route path="/card"        element={<Card />} />
+      <Route path="/cart"        element={<Cart />} />
       <Route path="/signin"       element={<SignIn />} />
       <Route path="/signup"      element={<SignUp />} />
       <Route path="/account"     element={<Account />} />

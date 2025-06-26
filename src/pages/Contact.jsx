@@ -1,7 +1,6 @@
 // src/pages/ContactPage.jsx
 import { useState } from 'react'
-import apiClient     from '../api/axiosInstance'  // ← ton axiosInstance
-
+import apiClient     from '../api/axiosInstance'  
 export default function ContactPage() {
   const [form, setForm]       = useState({
     name: '',

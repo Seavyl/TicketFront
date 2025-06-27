@@ -9,7 +9,7 @@ const apiClient = axios.create({
 apiClient.interceptors.response.use(
   res => res,
   err => {
-    // Si le serveur renvoie 401 → token invalide ou expiré
+    // Si le serveur renvoie 401 → invalid token
     if (err.response?.status === 401) {
       // Supprime le token stocké
       localStorage.removeItem('jwt');
